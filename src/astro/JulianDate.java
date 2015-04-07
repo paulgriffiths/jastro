@@ -12,16 +12,26 @@ import java.util.Date;
 /**
  * Julian date class
  * 
- * @author paul
+ * @author Paul Griffiths
  */
 public class JulianDate implements Comparable<JulianDate> {
+    
+    /**  Number of milliseconds in a day  */
     private static final double MS_IN_A_DAY = 86400000.0;
+    
+    /**  Julian date at J2000 epoch  */
     private static final double EPOCH_J2000 = 2451545.0;
+    
+    /**  Number of days in a Julian century  */
     private static final double DAYS_IN_CENTURY = 36525;
+    
+    /**  UNIX timestamp at J2000 epoch  */
     private static final long TS_J2000;
     
+    /**  Julian date for this object  */
     private final double jdate;
     
+    /**  Initialize static timestamp member  */
     static {
         Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
         cal.set(Calendar.MILLISECOND, 0);
@@ -29,26 +39,55 @@ public class JulianDate implements Comparable<JulianDate> {
         TS_J2000 = cal.getTime().getTime();
     }
     
+    /**
+     * Converts a Date object into a Julian date.
+     * 
+     * @param d     The date to convert
+     * @return      The corresponding Julian date
+     */
     private static double jdate_from_date(final Date d) {
         return EPOCH_J2000 + ((d.getTime() - TS_J2000) / MS_IN_A_DAY);
     }
     
+    /**
+     * Default class constructor.
+     */
     public JulianDate() {
         jdate = jdate_from_date(Calendar.getInstance().getTime());
     }
     
+    /**
+     * Class constructor taking Date object.
+     * 
+     * @param date  The Date object
+     */
     public JulianDate(final Date date) {
         jdate = jdate_from_date(date);
     }
     
+    /**
+     * Gets the Julian date for this object.
+     * 
+     * @return  The Julian date for this object.
+     */
     public double getJulianDate() {
         return jdate;
     }
     
+    /**
+     * Returns the number of Julian days since the J2000 epoch.
+     * 
+     * @return  The number of Julian days since the J2000 epoch
+     */
     public double daysSinceJ2000() {
         return jdate - EPOCH_J2000;
     }
     
+    /**
+     * Returns the number of Julian centuries since the J2000 epoch.
+     * 
+     * @return  The number of Julian centuries since the J2000 epoch.
+     */
     public double centuriesSinceJ2000() {
         return daysSinceJ2000() / DAYS_IN_CENTURY;
     }
@@ -93,9 +132,16 @@ public class JulianDate implements Comparable<JulianDate> {
      */
     @Override
     public int hashCode() {
-        return ((int) getJulianDate()) % 100;
+        return (int)(((long) getJulianDate()) % 100);
     }
     
+    /**
+     * Overriden compareTo() method.
+     * 
+     * @param date  The Julian date to which to compare
+     * @return      1, -1 or 0 if the compared to date is less than,
+     *              greater than, or equal to this date, respectively
+     */
     @Override
     public int compareTo(JulianDate date) {
         if ( getJulianDate() < date.getJulianDate() ) {

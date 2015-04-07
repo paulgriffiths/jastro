@@ -14,17 +14,36 @@ import static java.lang.Math.toRadians;
 import java.util.Date;
 
 /**
- *
- * @author paul
+ * Orbital (Keplerian) elements class.
+ * 
+ * @author Paul Griffiths
  */
-public class OrbitalElements {
-    private final double sma;         //  Semi-major axis
-    private final double ecc;         //  Eccentricity
-    private final double inc;         //  Inclination
-    private final double ml;          //  Mean longitude
-    private final double lp;          //  Longitude perihelion
-    private final double lan;         //  Longitude ascending node
+public final class OrbitalElements {
     
+    /**  Semi-major axis  */
+    private final double sma;
+    
+    /**  Eccentricity  */
+    private final double ecc;
+    
+    /**  Inclination  */
+    private final double inc;
+    
+    /**  Mean longitude  */
+    private final double ml;
+    
+    /**  Longitude perihelion  */
+    private final double lp;
+    
+    /**  Longitude ascending node  */
+    private final double lan;
+    
+    /**
+     * Factory function for planetary elements at J2000 epoch.
+     * 
+     * @param planet    The planet
+     * @return          The planetary elements at the J2000 epoch
+     */
     public static OrbitalElements getJ2000Elements(final Planet planet) {
         OrbitalElements elems;
         
@@ -98,6 +117,13 @@ public class OrbitalElements {
         return elems;
     }
     
+    /**
+     * Factory function for planetary elements representing change over a
+     * Julian Century.
+     * 
+     * @param planet    The planet
+     * @return          The planetary elements delta over a Julian century
+     */
     public static OrbitalElements getJCenturyElements(final Planet planet) {
         OrbitalElements elems;
         
@@ -171,6 +197,14 @@ public class OrbitalElements {
         return elems;
     }
     
+    /**
+     * Factory function for planetary elements representing change over a
+     * Julian Century.
+     * 
+     * @param planet    The planet
+     * @param date      The date
+     * @return          The planetary elements delta over a Julian century
+     */
     public static OrbitalElements getJulianEpochElements(final Planet planet,
                                                          final Date date) {
         return new OrbitalElements(getJ2000Elements(planet),
@@ -178,6 +212,18 @@ public class OrbitalElements {
                                    new JulianDate(date).centuriesSinceJ2000());
     }
     
+    /**
+     * Class constructor.
+     * 
+     * Private constructor, objects created solely through factory functions.
+     * 
+     * @param sma   Semi-major axis
+     * @param ecc   Eccentricity
+     * @param inc   Inclination
+     * @param ml    Mean longitude
+     * @param lp    Longitude perihelion
+     * @param lan   Longitude of ascending node
+     */
     private OrbitalElements(final double sma,
                            final double ecc,
                            final double inc,
@@ -192,6 +238,13 @@ public class OrbitalElements {
         this.lan = toRadians(lan);
     }
     
+    /**
+     * Class constructor for point-in-time.
+     * 
+     * @param epoch     Orbital elements at an epoch
+     * @param periodic  Orbital elements delta per change in period
+     * @param periods   Number of periods
+     */
     private OrbitalElements(final OrbitalElements epoch,
                            final OrbitalElements periodic,
                            final double periods) {
@@ -203,61 +256,111 @@ public class OrbitalElements {
         lan = epoch.lan + periodic.lan * periods;
     }
 
+    /**
+     * Gets the semi-major axis.
+     * 
+     * @return  The semi-major axis 
+     */
     public double getSma() {
         return sma;
     }
     
+    /**
+     * Gets the eccentricity.
+     * 
+     * @return  The eccentricity 
+     */
     public double getEcc() {
         return ecc;
     }
     
+    /**
+     * Gets the inclination.
+     * 
+     * @return  The inclination
+     */
     public double getInc() {
         return inc;
     }
     
+    /**
+     * Gets the mean longitude.
+     * 
+     * @return  The mean longitude 
+     */
     public double getMl() {
         return ml;
     }
     
+    /**
+     * Gets the longitude perihelion.
+     * 
+     * @return  The longitude perihelion
+     */
     public double getLp() {
         return lp;
     }
     
+    /**
+     * Gets the longitude of the ascending node.
+     * 
+     * @return  The longitude of the ascending node 
+     */
     public double getLan() {
         return lan;
     }
     
+    /**
+     * Gets the mean anomaly.
+     * 
+     * @return  The mean anomaly 
+     */
     public double getMan() {
         return ml - lp;
     }
     
+    /**
+     * Gets the argument of perihelion.
+     * 
+     * @return  The argument of perihelion 
+     */
     public double getArp() {
         return lp - lan;
     }
     
+    /**
+     * Calculates the heliocentric orbital coordinates.
+     * 
+     * @return  The heliocentric orbital coordinates
+     */
     public RectangularCoords helio_orb_coords() {
         RectangularCoords hoc = new RectangularCoords();
         
         final double e_anom = Astro.kepler(getMan(), getEcc());
         hoc.setX(getSma() * (cos(e_anom) - getEcc()));
-        hoc.setY(getSma() * sqrt(1 - pow(getEcc(), 2) - sin(e_anom)));
+        hoc.setY(getSma() * sqrt(1 - pow(getEcc(), 2)) * sin(e_anom));
         hoc.setZ(hypot(hoc.getX(), hoc.getY()));
         
         return hoc;
     }
     
+    /**
+     * Calculates the heliocentric ecliptic coordinates.
+     * 
+     * @return  The heliocentric ecliptic coordinates 
+     */
     public RectangularCoords helio_ecl_coords() {
         final RectangularCoords hoc = helio_orb_coords();
         RectangularCoords hec = new RectangularCoords();
         
-        hec.setX((cos(getArp()) * cos(getLan()) - sin(getArp()) *
-                  sin(getLan()) * cos(getInc()) * hoc.getX()) +
-                 (-sin(getArp()) * cos(getLan()) - cos(getArp()) *
-                  sin(getLan()) * cos(getInc()) * hoc.getY()));
-        hec.setY((cos(getArp()) * cos(getLan()) + sin(getArp()) *
-                  cos(getLan()) * cos(getInc()) * hoc.getX()) +
-                 (-sin(getArp()) * sin(getLan()) + cos(getArp()) *
-                  cos(getLan()) * cos(getInc()) * hoc.getY()));
+        hec.setX(((cos(getArp()) * cos(getLan()) - sin(getArp()) *
+                  sin(getLan()) * cos(getInc())) * hoc.getX()) +
+                 ((-sin(getArp()) * cos(getLan()) - cos(getArp()) *
+                  sin(getLan()) * cos(getInc())) * hoc.getY()));
+        hec.setY(((cos(getArp()) * sin(getLan()) + sin(getArp()) *
+                  cos(getLan()) * cos(getInc())) * hoc.getX()) +
+                 ((-sin(getArp()) * sin(getLan()) + cos(getArp()) *
+                  cos(getLan()) * cos(getInc())) * hoc.getY()));
         hec.setZ((sin(getArp()) * sin(getInc()) * hoc.getX()) +
                  (cos(getArp()) * sin(getInc()) * hoc.getY()));
         

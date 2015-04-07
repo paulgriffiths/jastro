@@ -15,9 +15,9 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 /**
- * Astronomical class
+ * General astronomical class
  * 
- * @author paul
+ * @author Paul Griffiths
  */
 public class Astro {
     
@@ -69,7 +69,13 @@ public class Astro {
         return e_anom;
     }
     
-    public static double normalize_degrees(final double angle) {
+    /**
+     * Normalizes an angle in degrees so that {@literal 0 <= angle < 360}.
+     * 
+     * @param angle The angle to normalize
+     * @return      The normalized angle
+     */
+    public static double normalizeDegrees(final double angle) {
         return angle - 360.0 * floor(angle / 360.0);
     }
 }

@@ -6,28 +6,62 @@
 package astro;
 
 /**
- *
- * @author paul
+ * Planets enumeration class.
+ * 
+ * @author Paul Griffiths
  */
 public enum Planet {
+    
+    /**  Mercury  */
     MERCURY ("Mercury"),
+    
+    /**  Venus  */
     VENUS ("Venus"),
+    
+    /**  Earth  */
     EARTH ("Earth"),
+    
+    /**  Sun  */
     SUN ("Sun"),
+    
+    /**  Mars  */
     MARS ("Mars"),
+    
+    /**  Jupiter  */
     JUPITER ("Jupiter"),
+    
+    /**  Saturn  */
     SATURN ("Saturn"),
+    
+    /**  Uranus  */
     URANUS ("Uranus"),
+    
+    /**  Neptune  */
     NEPTUNE ("Neptune"),
+    
+    /**  Pluto  */
     PLUTO ("Pluto"),
+    
+    /**  Moon  */
     MOON ("Moon");
     
+    /**  The planet's name  */
     private final String name;
     
-    Planet(final String name) {
+    /**
+     * Class constructor.
+     * 
+     * @param name  The planet's name
+     */
+    private Planet(final String name) {
         this.name = name;
     }
     
+    /**
+     * Gets this planet's name.
+     * 
+     * @return  This planet's name
+     */
     public String getName() {
         return name;
     }
