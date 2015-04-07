@@ -14,8 +14,9 @@ import static org.junit.Assert.*;
 import astro.Planet;
 
 /**
- *
- * @author paul
+ * Planets enumeration class unit tests class.
+ * 
+ * @author Paul Griffiths
  */
 public class PlanetTest {
     

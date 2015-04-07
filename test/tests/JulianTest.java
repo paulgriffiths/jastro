@@ -15,10 +15,13 @@ import astro.JulianDate;
 import static astro.Astro.getUTCDate;
 
 /**
- *
- * @author paul
+ * Julian date unit tests class.
+ * 
+ * @author Paul Griffiths
  */
 public class JulianTest {
+    
+    /**  Desired accuracy for floating point unit tests  */
     private static final double accuracy = 1e-3;
     
     public JulianTest() {

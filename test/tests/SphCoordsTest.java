@@ -15,10 +15,13 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author paul
+ * Spherical coordinates class unit tests class.
+ * 
+ * @author Paul Griffiths
  */
 public class SphCoordsTest {
+    
+    /**  Desired accuracy for unit tests class  */
     private static final double accuracy = 1e-6;
     
     public SphCoordsTest() {

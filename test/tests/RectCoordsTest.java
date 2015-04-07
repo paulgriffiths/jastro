@@ -15,10 +15,13 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author paul
+ * Rectangular coordinates class unit tests class.
+ * 
+ * @author Paul Griffiths
  */
 public class RectCoordsTest {
+    
+    /**  Desired accuracy for floating point unit tests  */
     private static final double accuracy = 1e-6;
     
     public RectCoordsTest() {

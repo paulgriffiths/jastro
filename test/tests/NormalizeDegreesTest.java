@@ -11,13 +11,16 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import static astro.Astro.normalize_degrees;
+import static astro.Astro.normalizeDegrees;
 
 /**
- *
- * @author paul
+ * Normalize degrees function unit tests.
+ * 
+ * @author Paul Griffiths
  */
 public class NormalizeDegreesTest {
+    
+    /**  Desired accuracy for floating point unit tests  */
     private static final double accuracy = 1e-6;
     
     public NormalizeDegreesTest() {
@@ -47,25 +50,25 @@ public class NormalizeDegreesTest {
     
     @Test
     public void testNormalizeDegrees() {
-        double test_result = normalize_degrees(50);
+        double test_result = normalizeDegrees(50);
         assertEquals(50, test_result, accuracy);
 
-        test_result = normalize_degrees(400);
+        test_result = normalizeDegrees(400);
         assertEquals(40, test_result, accuracy);
 
-        test_result = normalize_degrees(-60);
+        test_result = normalizeDegrees(-60);
         assertEquals(300, test_result, accuracy);
 
-        test_result = normalize_degrees(-460);
+        test_result = normalizeDegrees(-460);
         assertEquals(260, test_result, accuracy);
 
-        test_result = normalize_degrees(500);
+        test_result = normalizeDegrees(500);
         assertEquals(140, test_result, accuracy);
 
-        test_result = normalize_degrees(360);
+        test_result = normalizeDegrees(360);
         assertEquals(0, test_result, accuracy);
 
-        test_result = normalize_degrees(0);
+        test_result = normalizeDegrees(0);
         assertEquals(0, test_result, accuracy);
     }
 }

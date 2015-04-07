@@ -11,10 +11,13 @@ import static java.lang.Math.toRadians;
 import static astro.Astro.kepler;
 
 /**
- *
- * @author paul
+ * Keplerian function unit tests class.
+ * 
+ * @author Paul Griffiths
  */
 public class KeplerTest {
+    
+    /**  Desired accuracy for floating point unit tests  */
     private static final double accuracy = 1e-6;
     
     @Test
