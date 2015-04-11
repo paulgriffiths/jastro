@@ -30,7 +30,7 @@ abstract public class PlanetPosition {
     private final Date date;
     
     /**
-     * Planet position object factory function.
+     * Planet position object factory function with date.
      * 
      * @param planet    The planet for which to calculate position
      * @param date      The date for which to calculate position
@@ -95,14 +95,12 @@ abstract public class PlanetPosition {
      * 
      * @param planet    The planet for which to calculate position
      * @param date      The date for which to calculate position
-     * @param elems     The orbital elements
      */
     protected PlanetPosition(final Planet planet,
-                             final Date date,
-                             final OrbitalElements elems) {
+                             final Date date) {
         this.planet = planet;
         this.date = date;
-        this.elems = elems;
+        this.elems = this.planet.getDateElements(this.date);
     }
     
     /**
@@ -205,9 +203,8 @@ abstract class PlanetJ2000 extends PlanetPosition {
      * @param elems     The orbital elements
      */
     protected PlanetJ2000(final Planet planet,
-                          final Date date,
-                          final OrbitalElements elems) {
-        super(planet, date, elems);
+                          final Date date) {
+        super(planet, date);
     }
     
     @Override
@@ -238,22 +235,19 @@ abstract class PlanetJ2000 extends PlanetPosition {
 
 final class MercuryJ2000 extends PlanetJ2000 {
     MercuryJ2000(final Date date) {
-        super(Planet.MERCURY, date,
-              OrbitalElements.getJulianEpochElements(Planet.MERCURY, date));
+        super(Planet.MERCURY, date);
     }
 }
 
 final class VenusJ2000 extends PlanetJ2000 {
     VenusJ2000(final Date date) {
-        super(Planet.VENUS, date,
-              OrbitalElements.getJulianEpochElements(Planet.VENUS, date));
+        super(Planet.VENUS, date);
     }
 }
 
 final class EarthJ2000 extends PlanetJ2000 {
     EarthJ2000(final Date date) {
-        super(Planet.EARTH, date,
-              OrbitalElements.getJulianEpochElements(Planet.EARTH, date));
+        super(Planet.EARTH, date);
     }
     
     @Override
@@ -269,8 +263,7 @@ final class EarthJ2000 extends PlanetJ2000 {
 
 final class SunJ2000 extends PlanetJ2000 {
     SunJ2000(final Date date) {
-        super(Planet.SUN, date,
-              OrbitalElements.getJulianEpochElements(Planet.EARTH, date));
+        super(Planet.SUN, date);
     }
     
     @Override
@@ -286,42 +279,36 @@ final class SunJ2000 extends PlanetJ2000 {
 
 final class MarsJ2000 extends PlanetJ2000 {
     MarsJ2000(final Date date) {
-        super(Planet.MARS, date,
-              OrbitalElements.getJulianEpochElements(Planet.MARS, date));
+        super(Planet.MARS, date);
     }
 }
 
 final class JupiterJ2000 extends PlanetJ2000 {
     JupiterJ2000(final Date date) {
-        super(Planet.JUPITER, date,
-              OrbitalElements.getJulianEpochElements(Planet.JUPITER, date));
+        super(Planet.JUPITER, date);
     }
 }
 
 final class SaturnJ2000 extends PlanetJ2000 {
     SaturnJ2000(final Date date) {
-        super(Planet.SATURN, date,
-              OrbitalElements.getJulianEpochElements(Planet.SATURN, date));
+        super(Planet.SATURN, date);
     }
 }
 
 final class UranusJ2000 extends PlanetJ2000 {
     UranusJ2000(final Date date) {
-        super(Planet.URANUS, date,
-              OrbitalElements.getJulianEpochElements(Planet.URANUS, date));
+        super(Planet.URANUS, date);
     }
 }
 
 final class NeptuneJ2000 extends PlanetJ2000 {
     NeptuneJ2000(final Date date) {
-        super(Planet.NEPTUNE, date,
-              OrbitalElements.getJulianEpochElements(Planet.NEPTUNE, date));
+        super(Planet.NEPTUNE, date);
     }
 }
 
 final class PlutoJ2000 extends PlanetJ2000 {
     PlutoJ2000(final Date date) {
-        super(Planet.PLUTO, date,
-              OrbitalElements.getJulianEpochElements(Planet.PLUTO, date));
+        super(Planet.PLUTO, date);
     }
 }

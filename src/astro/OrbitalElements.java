@@ -18,7 +18,7 @@ import java.util.Date;
  * 
  * @author Paul Griffiths
  */
-public final class OrbitalElements {
+public abstract class OrbitalElements {
     
     /**  Semi-major axis  */
     private final double sma;
@@ -39,183 +39,49 @@ public final class OrbitalElements {
     private final double lan;
     
     /**
-     * Factory function for planetary elements at J2000 epoch.
+     * Factory function for J2000 epoch elements
      * 
-     * @param planet    The planet
-     * @return          The planetary elements at the J2000 epoch
+     * @param sma   Semi-major axis
+     * @param ecc   Eccentricity
+     * @param inc   Inclination
+     * @param ml    Mean longitude
+     * @param lp    Longitude perihelion
+     * @param lan   Longitude of ascending node
+     * @return      The newly created orbital elements object
      */
-    public static OrbitalElements getJ2000Elements(final Planet planet) {
-        OrbitalElements elems;
-        
-        switch ( planet ) {
-            case MERCURY:
-                elems = new OrbitalElements(0.387009927, 0.20563593,
-                                            7.00497902, 252.25032350,
-                                            77.45779628, 48.33076593);
-                break;
-                
-            case VENUS:
-                elems = new OrbitalElements(0.72333566, 0.00677672,
-                                            3.39467605, 181.97909950,
-                                            131.60246718, 76.67984255);
-                break;
-                
-            case EARTH:
-                elems = new OrbitalElements(1.00000261, 0.01671123,
-                                            -0.00001531, 100.46457166,
-                                            102.93768193, 0.0);
-                break;
-                
-            case MARS:
-                elems = new OrbitalElements(1.52371034, 0.09339410,
-                                            1.84969142, -4.55343205,
-                                            -23.94362959, 49.55953891);
-                break;
-                
-            case JUPITER:
-                elems = new OrbitalElements(5.20288700, 0.04838624,
-                                            1.30439695, 34.39644051,
-                                            14.72847983, 100.47390909);
-                break;
-                
-            case SATURN:
-                elems = new OrbitalElements(9.53667594, 0.05386179,
-                                            2.48599187, 49.95424423,
-                                            92.59887831, 113.66242448);
-                break;
-                
-            case URANUS:
-                elems = new OrbitalElements(19.18916464, 0.04725744,
-                                            0.77263783, 313.23810451,
-                                            170.95427630, 74.01692503);
-                break;
-                
-            case NEPTUNE:
-                elems = new OrbitalElements(30.06992276, 0.00859048,
-                                            1.77004347, -55.12002969,
-                                            44.96476227, 131.78422574);
-                break;
-                
-            case PLUTO:
-                elems = new OrbitalElements(39.48211675, 0.24882730,
-                                            17.14001206, 238.92903833,
-                                            224.06891629, 110.30393684);
-                break;
-                
-            case SUN:
-                throw new IllegalArgumentException(
-                            "No J2000 elements available for the Sun");
-                
-            case MOON:
-                throw new IllegalArgumentException(
-                            "No J2000 elements available for the Moon");
-                
-            default:
-                throw new IllegalArgumentException("Unrecognized planet");
-        }
-        
-        return elems;
+    public static OrbitalElements newJ2000Elements(final double sma,
+                                                   final double ecc,
+                                                   final double inc,
+                                                   final double ml,
+                                                   final double lp,
+                                                   final double lan) {
+        return new OrbitalElementsJ2000(sma, ecc, inc, ml, lp, lan);                 
     }
     
     /**
-     * Factory function for planetary elements representing change over a
-     * Julian Century.
+     * Factory function for Y2000 epoch elements
      * 
-     * @param planet    The planet
-     * @return          The planetary elements delta over a Julian century
+     * @param sma   Semi-major axis
+     * @param ecc   Eccentricity
+     * @param inc   Inclination
+     * @param ml    Mean longitude
+     * @param lp    Longitude perihelion
+     * @param lan   Longitude of ascending node
+     * @return      The newly created orbital elements object
      */
-    public static OrbitalElements getJCenturyElements(final Planet planet) {
-        OrbitalElements elems;
-        
-        switch ( planet ) {
-            case MERCURY:
-                elems = new OrbitalElements(0.00000037, 0.00001906,
-                                            -0.00594749, 149472.67411175,
-                                            0.16047689, -0.12534081);
-                break;
-                
-            case VENUS:
-                elems = new OrbitalElements(0.00000390, -0.00004107,
-                                            -0.00078890, 58517.81538729,
-                                            0.00268329, -0.27769418);
-                break;
-                
-            case EARTH:
-                elems = new OrbitalElements(0.00000562, -0.00004392,
-                                            -0.01294668, 35999.37244981,
-                                            0.32327364, 0.0);
-                break;
-                
-            case MARS:
-                elems = new OrbitalElements(0.00001847, 0.00007882,
-                                            -0.00813131, 19140.30268499,
-                                            0.44441088, -0.29257343);
-                break;
-                
-            case JUPITER:
-                elems = new OrbitalElements(-0.00011607, -0.00013253,
-                                            -0.00183714, 3034.74612775,
-                                            0.21252668, 0.20469106);
-                break;
-                
-            case SATURN:
-                elems = new OrbitalElements(-0.00125060, -0.00050991,
-                                            0.00193609, 1222.49362201,
-                                            -0.41897216, -0.28867794);
-                break;
-                
-            case URANUS:
-                elems = new OrbitalElements(-0.00196176, -0.00004397,
-                                            -0.00242939, 428.48202785,
-                                            0.40805281, 0.04240589);
-                break;
-                
-            case NEPTUNE:
-                elems = new OrbitalElements(0.00026291, 0.00005105,
-                                            0.00035372, 218.45945325,
-                                            -0.32241464, -0.00508664);
-                break;
-                
-            case PLUTO:
-                elems = new OrbitalElements(-0.00031596, 0.00005170,
-                                            0.00004818, 145.20780515,
-                                            -0.04062942, -0.01183482);
-                break;
-                
-            case SUN:
-                throw new IllegalArgumentException(
-                            "No Julian century elements available for the Sun");
-                
-            case MOON:
-                throw new IllegalArgumentException(
-                            "No Julian century elements available for the Moon");
-                
-            default:
-                throw new IllegalArgumentException("Unrecognized planet");       
-        }
-        
-        return elems;
-    }
-    
-    /**
-     * Factory function for planetary elements representing change over a
-     * Julian Century.
-     * 
-     * @param planet    The planet
-     * @param date      The date
-     * @return          The planetary elements delta over a Julian century
-     */
-    public static OrbitalElements getJulianEpochElements(final Planet planet,
-                                                         final Date date) {
-        return new OrbitalElements(getJ2000Elements(planet),
-                                   getJCenturyElements(planet),
-                                   new JulianDate(date).centuriesSinceJ2000());
+    public static OrbitalElements newY2000Elements(final double sma,
+                                                   final double ecc,
+                                                   final double inc,
+                                                   final double ml,
+                                                   final double lp,
+                                                   final double lan) {
+        return new OrbitalElementsY2000(sma, ecc, inc, ml, lp, lan);                 
     }
     
     /**
      * Class constructor.
      * 
-     * Private constructor, objects created solely through factory functions.
+     * Protected constructor, objects created solely through factory functions.
      * 
      * @param sma   Semi-major axis
      * @param ecc   Eccentricity
@@ -224,12 +90,12 @@ public final class OrbitalElements {
      * @param lp    Longitude perihelion
      * @param lan   Longitude of ascending node
      */
-    private OrbitalElements(final double sma,
-                           final double ecc,
-                           final double inc,
-                           final double ml,
-                           final double lp,
-                           final double lan) {
+    protected OrbitalElements(final double sma,
+                              final double ecc,
+                              final double inc,
+                              final double ml,
+                              final double lp,
+                              final double lan) {
         this.sma = sma;
         this.ecc = ecc;
         this.inc = toRadians(inc);
@@ -245,9 +111,9 @@ public final class OrbitalElements {
      * @param periodic  Orbital elements delta per change in period
      * @param periods   Number of periods
      */
-    private OrbitalElements(final OrbitalElements epoch,
-                           final OrbitalElements periodic,
-                           final double periods) {
+    protected OrbitalElements(final OrbitalElements epoch,
+                              final OrbitalElements periodic,
+                              final double periods) {
         sma = epoch.sma + periodic.sma * periods;
         ecc = epoch.ecc + periodic.ecc * periods;
         inc = epoch.inc + periodic.inc * periods;
@@ -255,7 +121,17 @@ public final class OrbitalElements {
         lp = epoch.lp + periodic.lp * periods;
         lan = epoch.lan + periodic.lan * periods;
     }
-
+    
+    /**
+     * Returns a new element object at the specified date.
+     * 
+     * @param period_elems  The orbital elements delta for the relevant period
+     * @param date          The date at which to create
+     * @return              The orbital elements object at the specified date
+     */
+    public abstract OrbitalElements getDateElements(final OrbitalElements period_elems,
+                                                    final Date date);
+    
     /**
      * Gets the semi-major axis.
      * 
@@ -353,18 +229,88 @@ public final class OrbitalElements {
         final RectangularCoords hoc = helio_orb_coords();
         RectangularCoords hec = new RectangularCoords();
         
-        hec.setX(((cos(getArp()) * cos(getLan()) - sin(getArp()) *
-                  sin(getLan()) * cos(getInc())) * hoc.getX()) +
-                 ((-sin(getArp()) * cos(getLan()) - cos(getArp()) *
-                  sin(getLan()) * cos(getInc())) * hoc.getY()));
-        hec.setY(((cos(getArp()) * sin(getLan()) + sin(getArp()) *
-                  cos(getLan()) * cos(getInc())) * hoc.getX()) +
-                 ((-sin(getArp()) * sin(getLan()) + cos(getArp()) *
-                  cos(getLan()) * cos(getInc())) * hoc.getY()));
-        hec.setZ((sin(getArp()) * sin(getInc()) * hoc.getX()) +
-                 (cos(getArp()) * sin(getInc()) * hoc.getY()));
+        hec.setX( ( (cos(getArp()) * cos(getLan()) - sin(getArp()) *
+                     sin(getLan()) * cos(getInc()) ) * hoc.getX() ) +
+                  ( (-sin(getArp()) * cos(getLan()) - cos(getArp()) *
+                     sin(getLan()) * cos(getInc()) ) * hoc.getY() ) );
+        hec.setY( ( (cos(getArp()) * sin(getLan()) + sin(getArp()) *
+                     cos(getLan()) * cos(getInc()) ) * hoc.getX() ) +
+                  ( (-sin(getArp()) * sin(getLan()) + cos(getArp()) *
+                     cos(getLan()) * cos(getInc()) ) * hoc.getY() ) );
+        hec.setZ( ( sin(getArp()) * sin(getInc()) * hoc.getX() ) +
+                  ( cos(getArp()) * sin(getInc()) * hoc.getY() ) );
         
         return hec;
     }
+}
 
+/**
+ * J2000 epoch orbital elements class.
+ * 
+ * @author Paul Griffiths
+ */
+class OrbitalElementsJ2000 extends OrbitalElements {
+    
+    /**
+     * Class constructor.
+     * 
+     * @param sma   Semi-major axix
+     * @param ecc   Eccentricity
+     * @param inc   Inclination
+     * @param ml    Mean longitude
+     * @param lp    Longitude perihelion
+     * @param lan   Longitude of ascending node
+     */
+    OrbitalElementsJ2000(final double sma,
+                         final double ecc,
+                         final double inc,
+                         final double ml,
+                         final double lp,
+                         final double lan) {
+        super(sma, ecc, inc, ml, lp, lan);
+    }
+    
+    OrbitalElementsJ2000(final OrbitalElements epoch,
+                         final OrbitalElements periodic,
+                         final double periods) {
+        super(epoch, periodic, periods);
+    }
+    
+    @Override
+    public OrbitalElementsJ2000 getDateElements(final OrbitalElements period_elems,
+                                                final Date date) {
+        return new OrbitalElementsJ2000(this, period_elems,
+                                        new JulianDate(date).centuriesSinceJ2000());
+    }
+}
+
+/**
+ * Y2000 epoch orbital elements class.
+ * 
+ * @author Paul Griffiths
+ */
+class OrbitalElementsY2000 extends OrbitalElements {
+    OrbitalElementsY2000(final double sma,
+                         final double ecc,
+                         final double inc,
+                         final double ml,
+                         final double lp,
+                         final double lan) {
+        super(sma, ecc, inc, ml, lp, lan);
+    }
+    
+    OrbitalElementsY2000(final OrbitalElements epoch,
+                         final OrbitalElements periodic,
+                         final double periods) {
+        super(epoch, periodic, periods);
+    }
+    
+    //  BROKEN!! Implement with Y2000 epoch
+    
+    @Override
+    public OrbitalElementsY2000 getDateElements(final OrbitalElements period_elems,
+                                                final Date date) {
+        return new OrbitalElementsY2000(this, period_elems,
+                                        new JulianDate(date).centuriesSinceJ2000());
+    }
 }
