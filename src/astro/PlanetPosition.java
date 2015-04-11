@@ -99,7 +99,7 @@ abstract public class PlanetPosition {
     protected PlanetPosition(final Planet planet,
                              final Date date) {
         this.planet = planet;
-        this.date = date;
+        this.date = new Date(date.getTime());
         this.elems = this.planet.getDateElements(this.date);
     }
     
