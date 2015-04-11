@@ -55,7 +55,7 @@ public class Astro {
             throw new IllegalArgumentException("eccentricity < 0");
         }
         else if ( ecc > 1 ) {
-            throw new IllegalArgumentException("eccenticity > 1");
+            throw new IllegalArgumentException("eccentricity > 1");
         }
         
         double eAnom = mAnom;
