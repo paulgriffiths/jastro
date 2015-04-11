@@ -111,24 +111,24 @@ public enum Planet {
     private final String name;
     
     /**  The planet's orbital elements at the relevant epoch  */
-    private final OrbitalElements epoch_elems;
+    private final OrbitalElements epochElems;
     
     /**  The planet's orbital elements delta for the relevant time period  */
-    private final OrbitalElements period_elems;
+    private final OrbitalElements periodElems;
     
     /**
      * Class constructor.
      * 
      * @param name          The planet's name
-     * @param epoch_elems   The orbital elements at the relevant epoch
-     * @param period_elems  The orbital elements delta for the relevant period
+     * @param epochElems    The orbital elements at the relevant epoch
+     * @param periodElems   The orbital elements delta for the relevant period
      */
     private Planet(final String name,
-                   final OrbitalElements epoch_elems,
-                   final OrbitalElements period_elems) {
+                   final OrbitalElements epochElems,
+                   final OrbitalElements periodElems) {
         this.name = name;
-        this.epoch_elems = epoch_elems;
-        this.period_elems = period_elems;
+        this.epochElems = epochElems;
+        this.periodElems = periodElems;
     }
     
     /**
@@ -147,6 +147,6 @@ public enum Planet {
      * @return      The orbital elements at the specified date
      */
     public OrbitalElements getDateElements(final Date date) {
-        return epoch_elems.getDateElements(period_elems, date);
+        return epochElems.getDateElements(periodElems, date);
     }
 }
