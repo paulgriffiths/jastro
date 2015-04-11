@@ -25,9 +25,7 @@ public class RectangularCoords {
      * Default class constructor.
      */
     public RectangularCoords() {
-        x = 0.0;
-        y = 0.0;
-        z = 0.0;
+        this(0.0, 0.0, 0.0);
     }
     
     /**
@@ -47,9 +45,7 @@ public class RectangularCoords {
      * @param other The rectangular coordinates to copy
      */
     public RectangularCoords(final RectangularCoords other) {
-        x = other.x;
-        y = other.y;
-        z = other.z;
+        this(other.x, other.y, other.z);
     }
     
     /**
@@ -57,10 +53,7 @@ public class RectangularCoords {
      * @param other The spherical coordinates
      */
     public RectangularCoords(final SphericalCoords other) {
-        final RectangularCoords rc = other.toRectangular();
-        x = rc.x;
-        y = rc.y;
-        z = rc.z;
+        this(other.toRectangular());
     }
     
     /**

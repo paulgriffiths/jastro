@@ -23,9 +23,7 @@ public class SphericalCoords {
      * Default class constructor.
      */
     public SphericalCoords() {
-        azimuth = 0.0;
-        inclination = 0.0;
-        radius = 0.0;
+        this(0.0, 0.0, 0.0);
     }
     
     /**
@@ -48,9 +46,7 @@ public class SphericalCoords {
      * @param other The object from which to copy
      */
     public SphericalCoords(final SphericalCoords other) {
-        azimuth = other.azimuth;
-        inclination = other.inclination;
-        radius = other.radius;
+        this(other.azimuth, other.inclination, other.radius);
     }
     
     /**
@@ -58,10 +54,7 @@ public class SphericalCoords {
      * @param other The rectangular coordinates.
      */
     public SphericalCoords(final RectangularCoords other) {
-        SphericalCoords sc = other.toSpherical();
-        azimuth = sc.getAzimuth();
-        inclination = sc.getInclination();
-        radius = sc.getRadius();
+        this(other.toSpherical());
     }
     
    /**

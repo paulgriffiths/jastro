@@ -209,12 +209,12 @@ abstract class PlanetJ2000 extends PlanetPosition {
     
     @Override
     protected RectangularCoords helio_orb_coords() {
-        return getElements().helio_orb_coords();
+        return getElements().helioOrbCoords();
     }
     
     @Override
     protected RectangularCoords helio_ecl_coords() {
-        return getElements().helio_ecl_coords();
+        return getElements().helioEclCoords();
     }
     
     @Override

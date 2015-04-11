@@ -125,11 +125,11 @@ public abstract class OrbitalElements {
     /**
      * Returns a new element object at the specified date.
      * 
-     * @param period_elems  The orbital elements delta for the relevant period
+     * @param periodElems   The orbital elements delta for the relevant period
      * @param date          The date at which to create
      * @return              The orbital elements object at the specified date
      */
-    public abstract OrbitalElements getDateElements(final OrbitalElements period_elems,
+    public abstract OrbitalElements getDateElements(final OrbitalElements periodElems,
                                                     final Date date);
     
     /**
@@ -209,12 +209,12 @@ public abstract class OrbitalElements {
      * 
      * @return  The heliocentric orbital coordinates
      */
-    public RectangularCoords helio_orb_coords() {
+    public RectangularCoords helioOrbCoords() {
         RectangularCoords hoc = new RectangularCoords();
         
-        final double e_anom = Astro.kepler(getMan(), getEcc());
-        hoc.setX(getSma() * (cos(e_anom) - getEcc()));
-        hoc.setY(getSma() * sqrt(1 - pow(getEcc(), 2)) * sin(e_anom));
+        final double eAnom = Astro.kepler(getMan(), getEcc());
+        hoc.setX(getSma() * (cos(eAnom) - getEcc()));
+        hoc.setY(getSma() * sqrt(1 - pow(getEcc(), 2)) * sin(eAnom));
         hoc.setZ(hypot(hoc.getX(), hoc.getY()));
         
         return hoc;
@@ -225,8 +225,8 @@ public abstract class OrbitalElements {
      * 
      * @return  The heliocentric ecliptic coordinates 
      */
-    public RectangularCoords helio_ecl_coords() {
-        final RectangularCoords hoc = helio_orb_coords();
+    public RectangularCoords helioEclCoords() {
+        final RectangularCoords hoc = helioOrbCoords();
         RectangularCoords hec = new RectangularCoords();
         
         hec.setX( ( (cos(getArp()) * cos(getLan()) - sin(getArp()) *
@@ -277,9 +277,9 @@ class OrbitalElementsJ2000 extends OrbitalElements {
     }
     
     @Override
-    public OrbitalElementsJ2000 getDateElements(final OrbitalElements period_elems,
+    public OrbitalElementsJ2000 getDateElements(final OrbitalElements periodElems,
                                                 final Date date) {
-        return new OrbitalElementsJ2000(this, period_elems,
+        return new OrbitalElementsJ2000(this, periodElems,
                                         new JulianDate(date).centuriesSinceJ2000());
     }
 }
@@ -308,9 +308,9 @@ class OrbitalElementsY2000 extends OrbitalElements {
     //  BROKEN!! Implement with Y2000 epoch
     
     @Override
-    public OrbitalElementsY2000 getDateElements(final OrbitalElements period_elems,
+    public OrbitalElementsY2000 getDateElements(final OrbitalElements periodElems,
                                                 final Date date) {
-        return new OrbitalElementsY2000(this, period_elems,
+        return new OrbitalElementsY2000(this, periodElems,
                                         new JulianDate(date).centuriesSinceJ2000());
     }
 }

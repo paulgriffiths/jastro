@@ -53,7 +53,7 @@ public class JulianDate implements Comparable<JulianDate> {
      * Default class constructor.
      */
     public JulianDate() {
-        jdate = jdate_from_date(Calendar.getInstance().getTime());
+        this(Calendar.getInstance().getTime());
     }
     
     /**

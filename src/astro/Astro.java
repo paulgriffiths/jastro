@@ -44,11 +44,11 @@ public class Astro {
     /**
      * Solves Kepler's equation.
      * 
-     * @param m_anom    Mean anomaly, in radians
+     * @param mAnom     Mean anomaly, in radians
      * @param ecc       Eccentricity
      * @return          The eccentric anomaly, in radians
      */
-    public static double kepler(final double m_anom, final double ecc) {
+    public static double kepler(final double mAnom, final double ecc) {
         final double desired_accuracy = 1e-6;
         
         if ( ecc < 0 ) {
@@ -58,15 +58,15 @@ public class Astro {
             throw new IllegalArgumentException("eccenticity > 1");
         }
         
-        double e_anom = m_anom;
+        double eAnom = mAnom;
         double diff;
         
         do {
-            diff = e_anom - ecc * sin(e_anom) - m_anom;
-            e_anom -= diff / (1 - ecc * cos(e_anom));
+            diff = eAnom - ecc * sin(eAnom) - mAnom;
+            eAnom -= diff / (1 - ecc * cos(eAnom));
         } while ( abs(diff) > desired_accuracy );
         
-        return e_anom;
+        return eAnom;
     }
     
     /**
