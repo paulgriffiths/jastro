@@ -49,7 +49,7 @@ public class Astro {
      * @return          The eccentric anomaly, in radians
      */
     public static double kepler(final double mAnom, final double ecc) {
-        final double desired_accuracy = 1e-6;
+        final double desiredAccuracy = 1e-6;
         
         if ( ecc < 0 ) {
             throw new IllegalArgumentException("eccentricity < 0");
@@ -64,7 +64,7 @@ public class Astro {
         do {
             diff = eAnom - ecc * sin(eAnom) - mAnom;
             eAnom -= diff / (1 - ecc * cos(eAnom));
-        } while ( abs(diff) > desired_accuracy );
+        } while ( abs(diff) > desiredAccuracy );
         
         return eAnom;
     }
