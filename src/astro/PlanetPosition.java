@@ -9,6 +9,7 @@ import java.util.Date;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
+import java.util.Calendar;
 
 /**
  * Planet position class.
@@ -28,6 +29,16 @@ abstract public class PlanetPosition {
     
     /**  The position date  */
     private final Date date;
+    
+    /**
+     * Planet position object factory function for current time.
+     * 
+     * @param planet    The planet for which to calculate position
+     * @return          A planet position object
+     */
+    public static PlanetPosition getPosition(final Planet planet) {
+        return getPosition(planet, Calendar.getInstance().getTime());
+    }
     
     /**
      * Planet position object factory function with date.
@@ -128,6 +139,15 @@ abstract public class PlanetPosition {
      */
     public double getDistance() {
         return geo_equ_coords().toSpherical().getDistance();
+    }
+    
+    /**
+     * Gets the zodiacal coordinates of the planet position.
+     * 
+     * @return  The zodiacal coordinates of the planet position
+     */
+    public ZodiacCoords getZodiacCoords() {
+        return new ZodiacCoords(getRightAscension());
     }
     
     /**
