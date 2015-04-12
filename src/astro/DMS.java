@@ -23,10 +23,10 @@ public class DMS {
     /**  Seconds in a circle constant  */
     private static final int SECS_IN_A_CIRC = 1296000;
     
-    /*  Angle in normalized degrees  */
+    /*  Angle in degrees  */
     private final double degrees;
     
-    /*  Integral number of hours  */
+    /*  Integral number of degrees  */
     private final int degs;
     
     /*  Integral number of minutes  */
