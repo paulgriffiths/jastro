@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import astro.HMS;
+import net.paulgriffiths.astro.HMS;
 
 /**
  * Hours, minutes and seconds class unit tests class.

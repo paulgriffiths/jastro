@@ -12,7 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import astro.ZodiacCoords;
+import net.paulgriffiths.astro.ZodiacCoords;
 
 /**
  * Zodiac coordinates class unit tests class.

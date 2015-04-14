@@ -11,8 +11,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import astro.JulianDate;
-import static astro.Astro.getUTCDate;
+import net.paulgriffiths.astro.JulianDate;
+import static net.paulgriffiths.astro.Astro.getUTCDate;
 
 /**
  * Julian date unit tests class.

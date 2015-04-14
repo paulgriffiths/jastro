@@ -7,11 +7,11 @@
  */
 package tests;
 
-import static astro.Astro.getUTCDate;
-import static astro.Astro.normalizeDegrees;
-import astro.Planet;
-import astro.PlanetPosition;
-import static astro.PlanetPosition.getPosition;
+import static net.paulgriffiths.astro.Astro.getUTCDate;
+import static net.paulgriffiths.astro.Astro.normalizeDegrees;
+import net.paulgriffiths.astro.Planet;
+import net.paulgriffiths.astro.PlanetPosition;
+import static net.paulgriffiths.astro.PlanetPosition.getPosition;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

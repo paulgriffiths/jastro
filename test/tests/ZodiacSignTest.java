@@ -5,14 +5,14 @@
  */
 package tests;
 
-import astro.ZodiacSign;
+import net.paulgriffiths.astro.ZodiacSign;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import astro.ZodiacSign;
+import net.paulgriffiths.astro.ZodiacSign;
 
 /**
  * Zodiac sign enumeration class unit tests class.
