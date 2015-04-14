@@ -11,7 +11,10 @@ import static java.lang.Math.pow;
 import static java.lang.Math.sin;
 import static java.lang.Math.sqrt;
 import static java.lang.Math.toRadians;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 /**
  * Orbital (Keplerian) elements class.
@@ -290,6 +293,17 @@ class OrbitalElementsJ2000 extends OrbitalElements {
  * @author Paul Griffiths
  */
 class OrbitalElementsY2000 extends OrbitalElements {
+    
+    private static final long TS_Y2000;
+    private static final long MSECS_IN_A_DAY = 86400000;
+    
+    static {
+        Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
+        cal.set(Calendar.MILLISECOND, 0);
+        cal.set(1999, 11, 31, 0, 0, 0);
+        TS_Y2000 = cal.getTime().getTime();
+    }
+    
     OrbitalElementsY2000(final double sma,
                          final double ecc,
                          final double inc,
@@ -310,7 +324,7 @@ class OrbitalElementsY2000 extends OrbitalElements {
     @Override
     public OrbitalElementsY2000 getDateElements(final OrbitalElements periodElems,
                                                 final Date date) {
-        return new OrbitalElementsY2000(this, periodElems,
-                                        new JulianDate(date).centuriesSinceJ2000());
+        final double days = (date.getTime() - TS_Y2000) / (double) MSECS_IN_A_DAY;
+        return new OrbitalElementsY2000(this, periodElems, days);
     }
 }

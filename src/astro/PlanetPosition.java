@@ -8,6 +8,8 @@ package astro;
 import java.util.Date;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
+import static java.lang.Math.atan2;
+import static java.lang.Math.hypot;
 import static java.lang.Math.toRadians;
 import java.util.Calendar;
 
@@ -90,6 +92,14 @@ abstract public class PlanetPosition {
                 
             case PLUTO:
                 pos = new PlutoJ2000(date);
+                break;
+                
+            case MOON:
+                pos = new MoonY2000(date);
+                break;
+                
+            case SUN_FOR_MOON:
+                pos = new SunForMoonY2000(date);
                 break;
                 
             default:
@@ -330,5 +340,110 @@ final class NeptuneJ2000 extends PlanetJ2000 {
 final class PlutoJ2000 extends PlanetJ2000 {
     PlutoJ2000(final Date date) {
         super(Planet.PLUTO, date);
+    }
+}
+
+/**
+ * Planet position using J2000 epoch class.
+ * 
+ * @author Paul Griffiths
+ */
+abstract class PlanetY2000 extends PlanetPosition {
+    
+    /**
+     * Class constructor.
+     * 
+     * Abstract class, so constructor should only be called from subclasses.
+     * 
+     * @param planet    The planet for which to calculate position
+     * @param date      The date for which to calculate position
+     * @param elems     The orbital elements
+     */
+    protected PlanetY2000(final Planet planet,
+                          final Date date) {
+        super(planet, date);
+    }
+    
+    @Override
+    protected RectangularCoords helio_orb_coords() {
+        return getElements().helioOrbCoords();
+    }
+    
+    @Override
+    protected RectangularCoords helio_ecl_coords() {
+        return getElements().helioEclCoords();
+    }
+    
+    @Override
+    protected RectangularCoords geo_ecl_coords() {
+        final RectangularCoords hec = helio_ecl_coords();
+        final RectangularCoords hoc = helio_orb_coords();
+        
+        final PlanetPosition sfm = PlanetPosition.getPosition(Planet.SUN_FOR_MOON, getDate());
+        final OrbitalElements mOes = getElements();
+        final OrbitalElements sOes = sfm.getElements();
+        
+        //  Calculate mean elongation and argument
+        //  of latitude for the moon.
+        
+        final double mel = mOes.getMl() - sOes.getMl();
+        final double arl = mOes.getMl() - sOes.getLan();
+        
+        //  Adjust for longitude perturbations
+        
+        double dlon = -1.274 * sin(mOes.getMan() - 2 * mel);
+        dlon += 0.658 * sin(2 * mel);
+        dlon -= 0.186 * sin(sOes.getMan());
+        dlon -= 0.059 * sin(2 * mOes.getMan() - 2 * mel);
+        dlon -= 0.057 * sin(mOes.getMan() - 2 * mel + sOes.getMan());
+        dlon += 0.053 * sin(mOes.getMan() + 2 * mel);
+        dlon += 0.046 * sin(2 * mOes.getMl() - sOes.getMan());
+        dlon += 0.041 * sin(mOes.getMan() - sOes.getMan());
+        dlon -= 0.035 * sin(mOes.getMl());
+        dlon -= 0.031 * sin(mOes.getMan() + sOes.getMan());
+        dlon -= 0.015 * sin(2 * arl - 2 * mel);
+        dlon += 0.011 * sin(mOes.getMan() - 4 * mel);
+        
+        final double lon = atan2(hec.getY(), hec.getX()) + toRadians(dlon);
+
+        //  Adjust for latitude perturbations
+
+        double dlat = -0.173 * sin(arl - 2 * mel);
+        dlat -= 0.055 * sin(mOes.getMan() - arl - 2 * mel);
+        dlat -= 0.046 * sin(mOes.getMan() + arl - 2 * mel);
+        dlat += 0.033 * sin(arl + 2 * mel);
+        dlat += 0.017 * sin(2 * mOes.getMan() + arl);
+        
+        final double lat = atan2(hec.getZ(), hypot(hec.getX(), hec.getY())) +
+                           toRadians(dlat);
+
+        //  Adjust for rhc perturbations
+
+        double rhc = hoc.getZ() - 0.58 * cos(mOes.getMan() - 2 * mel);
+        rhc -= 0.46 * cos(2 * mel);
+        
+        return new RectangularCoords(rhc * cos(lon) * cos(lat),
+                                     rhc * sin(lon) * cos(lat),
+                                     rhc * sin(lat));
+    }
+    
+    @Override
+    protected RectangularCoords geo_equ_coords() {
+        final RectangularCoords gec = geo_ecl_coords();
+        return new RectangularCoords(gec.getX(),
+            gec.getY() * cos(OBLIQUITY) - gec.getZ() * sin(OBLIQUITY),
+            gec.getY() * sin(OBLIQUITY) + gec.getZ() * cos(OBLIQUITY));
+    }
+}
+
+final class MoonY2000 extends PlanetY2000 {
+    MoonY2000(final Date date) {
+        super(Planet.MOON, date);
+    }
+}
+
+final class SunForMoonY2000 extends PlanetY2000 {
+    SunForMoonY2000(final Date date) {
+        super(Planet.SUN_FOR_MOON, date);
     }
 }

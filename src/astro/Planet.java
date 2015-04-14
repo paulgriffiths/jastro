@@ -105,7 +105,22 @@ public enum Planet {
                                             -0.04062942, -0.01183482)),
     
     /**  Moon  */
-    MOON ("Moon", null, null);
+    MOON ("Moon",
+          OrbitalElements.newY2000Elements(60.2666, 0.0549,
+                                           5.1454, 198.5516,
+                                           83.1862, 125.1228),
+          OrbitalElements.newY2000Elements(0, 0,
+                                           0, 13.1763964649,
+                                           0.111403514, -0.0529538083)),
+    
+    /**  Sun for Moon  */
+    SUN_FOR_MOON("Sun For Moon",
+          OrbitalElements.newY2000Elements(1, 0.016709,
+                                           0, 278.9874,
+                                           -77.0596, 0),
+          OrbitalElements.newY2000Elements(0, -0.000000001151,
+                                           0, 0.98564735200,
+                                           0.00004709350, 0));
     
     /**  The planet's name  */
     private final String name;
