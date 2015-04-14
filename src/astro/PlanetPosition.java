@@ -55,51 +55,51 @@ abstract public class PlanetPosition {
         
         switch ( planet ) {
             case MERCURY:
-                pos = new MercuryJ2000(date);
+                pos = new Mercury(date);
                 break;
                 
             case VENUS:
-                pos = new VenusJ2000(date);
+                pos = new Venus(date);
                 break;
                 
             case EARTH:
-                pos = new EarthJ2000(date);
+                pos = new Earth(date);
                 break;
                 
             case SUN:
-                pos = new SunJ2000(date);
+                pos = new Sun(date);
                 break;
                 
             case MARS:
-                pos = new MarsJ2000(date);
+                pos = new Mars(date);
                 break;
                 
             case JUPITER:
-                pos = new JupiterJ2000(date);
+                pos = new Jupiter(date);
                 break;
                 
             case SATURN:
-                pos = new SaturnJ2000(date);
+                pos = new Saturn(date);
                 break;
                 
             case URANUS:
-                pos = new UranusJ2000(date);
+                pos = new Uranus(date);
                 break;
                 
             case NEPTUNE:
-                pos = new NeptuneJ2000(date);
+                pos = new Neptune(date);
                 break;
                 
             case PLUTO:
-                pos = new PlutoJ2000(date);
+                pos = new Pluto(date);
                 break;
                 
             case MOON:
-                pos = new MoonY2000(date);
+                pos = new Moon(date);
                 break;
                 
-            case SUN_FOR_MOON:
-                pos = new SunForMoonY2000(date);
+            case EMBARY:
+                pos = new EarthMoonBarycenter(date);
                 break;
                 
             default:
@@ -130,7 +130,7 @@ abstract public class PlanetPosition {
      * @return  The planet's right ascension 
      */
     public double getRightAscension() {
-        return geo_equ_coords().toSpherical().getRightAscension();
+        return geoEquCoords().toSpherical().getRightAscension();
     }
     
     /**
@@ -139,7 +139,7 @@ abstract public class PlanetPosition {
      * @return  The planet's declination 
      */
     public double getDeclination() {
-        return geo_equ_coords().toSpherical().getDeclination();
+        return geoEquCoords().toSpherical().getDeclination();
     }
     
     /**
@@ -148,7 +148,7 @@ abstract public class PlanetPosition {
      * @return  The planet's distance 
      */
     public double getDistance() {
-        return geo_equ_coords().toSpherical().getDistance();
+        return geoEquCoords().toSpherical().getDistance();
     }
     
     /**
@@ -192,36 +192,46 @@ abstract public class PlanetPosition {
      * 
      * @return  The heliocentric orbital coordinates of this position
      */
-    abstract protected RectangularCoords helio_orb_coords();
+    protected RectangularCoords helioOrbCoords() {
+        return getElements().helioOrbCoords();
+    }
     
     /**
      * Calculates the heliocentric ecliptic coordinates of this position.
      * 
      * @return  The heliocentric ecliptic coordinates of this position
      */
-    abstract protected RectangularCoords helio_ecl_coords();
+    protected RectangularCoords helioEclCoords() {
+        return getElements().helioEclCoords();
+    }
     
     /**
      * Calculates the geocentric ecliptic coordinates of this position.
      * 
      * @return  The geocentric ecliptic coordinates of this position 
      */
-    abstract protected RectangularCoords geo_ecl_coords();
+    abstract protected RectangularCoords geoEclCoords();
     
     /**
      * Calculates the geocentric equatorial coordinates of this position.
      * 
      * @return  The geocentric equatorial coordinates of this position 
      */
-    abstract protected RectangularCoords geo_equ_coords();
+    protected RectangularCoords geoEquCoords() {
+        final RectangularCoords gec = geoEclCoords();
+        return new RectangularCoords(gec.getX(),
+            gec.getY() * cos(OBLIQUITY) - gec.getZ() * sin(OBLIQUITY),
+            gec.getY() * sin(OBLIQUITY) + gec.getZ() * cos(OBLIQUITY));
+    }
+
 }
 
 /**
- * Planet position using J2000 epoch class.
+ * Planet position for solar orbiting bodies.
  * 
  * @author Paul Griffiths
  */
-abstract class PlanetJ2000 extends PlanetPosition {
+abstract class PlanetSolarOrbit extends PlanetPosition {
     
     /**
      * Class constructor.
@@ -232,123 +242,105 @@ abstract class PlanetJ2000 extends PlanetPosition {
      * @param date      The date for which to calculate position
      * @param elems     The orbital elements
      */
-    protected PlanetJ2000(final Planet planet,
+    protected PlanetSolarOrbit(final Planet planet,
                           final Date date) {
         super(planet, date);
     }
     
     @Override
-    protected RectangularCoords helio_orb_coords() {
-        return getElements().helioOrbCoords();
-    }
-    
-    @Override
-    protected RectangularCoords helio_ecl_coords() {
-        return getElements().helioEclCoords();
-    }
-    
-    @Override
-    protected RectangularCoords geo_ecl_coords() {
-        RectangularCoords hec = helio_ecl_coords();
-        hec.subtract(getPosition(Planet.EARTH, getDate()).helio_ecl_coords());
+    protected RectangularCoords geoEclCoords() {
+        RectangularCoords hec = helioEclCoords();
+        hec.subtract(getPosition(Planet.EARTH, getDate()).helioEclCoords());
         return hec;
-    }
-    
-    @Override
-    protected RectangularCoords geo_equ_coords() {
-        final RectangularCoords gec = geo_ecl_coords();
-        return new RectangularCoords(gec.getX(),
-            gec.getY() * cos(OBLIQUITY) - gec.getZ() * sin(OBLIQUITY),
-            gec.getY() * sin(OBLIQUITY) + gec.getZ() * cos(OBLIQUITY));
     }
 }
 
-final class MercuryJ2000 extends PlanetJ2000 {
-    MercuryJ2000(final Date date) {
+final class Mercury extends PlanetSolarOrbit {
+    Mercury(final Date date) {
         super(Planet.MERCURY, date);
     }
 }
 
-final class VenusJ2000 extends PlanetJ2000 {
-    VenusJ2000(final Date date) {
+final class Venus extends PlanetSolarOrbit {
+    Venus(final Date date) {
         super(Planet.VENUS, date);
     }
 }
 
-final class EarthJ2000 extends PlanetJ2000 {
-    EarthJ2000(final Date date) {
+final class Earth extends PlanetSolarOrbit {
+    Earth(final Date date) {
         super(Planet.EARTH, date);
     }
     
     @Override
-    public RectangularCoords geo_ecl_coords() {
+    public RectangularCoords geoEclCoords() {
         return new RectangularCoords(0, 0, 0);
     }
     
     @Override
-    public RectangularCoords geo_equ_coords() {
+    public RectangularCoords geoEquCoords() {
         return new RectangularCoords(0, 0, 0);
     }   
 }
 
-final class SunJ2000 extends PlanetJ2000 {
-    SunJ2000(final Date date) {
+final class Sun extends PlanetSolarOrbit {
+    Sun(final Date date) {
         super(Planet.SUN, date);
     }
     
     @Override
-    public RectangularCoords helio_ecl_coords() {
+    public RectangularCoords helioEclCoords() {
         return new RectangularCoords(0, 0, 0);
     }
     
     @Override
-    public RectangularCoords helio_orb_coords() {
+    public RectangularCoords helioOrbCoords() {
         return new RectangularCoords(0, 0, 0);
     }
 }
 
-final class MarsJ2000 extends PlanetJ2000 {
-    MarsJ2000(final Date date) {
+final class Mars extends PlanetSolarOrbit {
+    Mars(final Date date) {
         super(Planet.MARS, date);
     }
 }
 
-final class JupiterJ2000 extends PlanetJ2000 {
-    JupiterJ2000(final Date date) {
+final class Jupiter extends PlanetSolarOrbit {
+    Jupiter(final Date date) {
         super(Planet.JUPITER, date);
     }
 }
 
-final class SaturnJ2000 extends PlanetJ2000 {
-    SaturnJ2000(final Date date) {
+final class Saturn extends PlanetSolarOrbit {
+    Saturn(final Date date) {
         super(Planet.SATURN, date);
     }
 }
 
-final class UranusJ2000 extends PlanetJ2000 {
-    UranusJ2000(final Date date) {
+final class Uranus extends PlanetSolarOrbit {
+    Uranus(final Date date) {
         super(Planet.URANUS, date);
     }
 }
 
-final class NeptuneJ2000 extends PlanetJ2000 {
-    NeptuneJ2000(final Date date) {
+final class Neptune extends PlanetSolarOrbit {
+    Neptune(final Date date) {
         super(Planet.NEPTUNE, date);
     }
 }
 
-final class PlutoJ2000 extends PlanetJ2000 {
-    PlutoJ2000(final Date date) {
+final class Pluto extends PlanetSolarOrbit {
+    Pluto(final Date date) {
         super(Planet.PLUTO, date);
     }
 }
 
 /**
- * Planet position using J2000 epoch class.
+ * Planet position for Earth orbiting bodies.
  * 
  * @author Paul Griffiths
  */
-abstract class PlanetY2000 extends PlanetPosition {
+abstract class PlanetEarthOrbit extends PlanetPosition {
     
     /**
      * Class constructor.
@@ -359,27 +351,23 @@ abstract class PlanetY2000 extends PlanetPosition {
      * @param date      The date for which to calculate position
      * @param elems     The orbital elements
      */
-    protected PlanetY2000(final Planet planet,
+    protected PlanetEarthOrbit(final Planet planet,
                           final Date date) {
         super(planet, date);
     }
-    
-    @Override
-    protected RectangularCoords helio_orb_coords() {
-        return getElements().helioOrbCoords();
+}
+
+final class Moon extends PlanetEarthOrbit {
+    Moon(final Date date) {
+        super(Planet.MOON, date);
     }
     
     @Override
-    protected RectangularCoords helio_ecl_coords() {
-        return getElements().helioEclCoords();
-    }
-    
-    @Override
-    protected RectangularCoords geo_ecl_coords() {
-        final RectangularCoords hec = helio_ecl_coords();
-        final RectangularCoords hoc = helio_orb_coords();
+    protected RectangularCoords geoEclCoords() {
+        final RectangularCoords hec = helioEclCoords();
+        final RectangularCoords hoc = helioOrbCoords();
         
-        final PlanetPosition sfm = PlanetPosition.getPosition(Planet.SUN_FOR_MOON, getDate());
+        final PlanetPosition sfm = PlanetPosition.getPosition(Planet.EMBARY, getDate());
         final OrbitalElements mOes = getElements();
         final OrbitalElements sOes = sfm.getElements();
         
@@ -425,25 +413,31 @@ abstract class PlanetY2000 extends PlanetPosition {
         return new RectangularCoords(rhc * cos(lon) * cos(lat),
                                      rhc * sin(lon) * cos(lat),
                                      rhc * sin(lat));
+    } 
+}
+
+final class EarthMoonBarycenter extends PlanetEarthOrbit {
+    EarthMoonBarycenter(final Date date) {
+        super(Planet.EMBARY, date);
     }
     
     @Override
-    protected RectangularCoords geo_equ_coords() {
-        final RectangularCoords gec = geo_ecl_coords();
-        return new RectangularCoords(gec.getX(),
-            gec.getY() * cos(OBLIQUITY) - gec.getZ() * sin(OBLIQUITY),
-            gec.getY() * sin(OBLIQUITY) + gec.getZ() * cos(OBLIQUITY));
+    protected RectangularCoords helioOrbCoords() {
+        throw new UnsupportedOperationException("Position must not be taken");
     }
-}
-
-final class MoonY2000 extends PlanetY2000 {
-    MoonY2000(final Date date) {
-        super(Planet.MOON, date);
+    
+    @Override
+    protected RectangularCoords helioEclCoords() {
+        throw new UnsupportedOperationException("Position must not be taken");
     }
-}
-
-final class SunForMoonY2000 extends PlanetY2000 {
-    SunForMoonY2000(final Date date) {
-        super(Planet.SUN_FOR_MOON, date);
+    
+    @Override
+    protected RectangularCoords geoEclCoords() {
+        throw new UnsupportedOperationException("Position must not be taken");
+    }
+    
+    @Override
+    protected RectangularCoords geoEquCoords() {
+        throw new UnsupportedOperationException("Position must not be taken");
     }
 }

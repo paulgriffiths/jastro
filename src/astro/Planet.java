@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public enum Planet {
     
-    /**  Mercury  */
+    /**  Mercury  *//**  Mercury  *//**  Mercury  *//**  Mercury  */
     MERCURY ("Mercury",
              OrbitalElements.newJ2000Elements(0.387009927, 0.20563593,
                                               7.00497902, 252.25032350,
@@ -114,13 +114,13 @@ public enum Planet {
                                            0.111403514, -0.0529538083)),
     
     /**  Sun for Moon  */
-    SUN_FOR_MOON("Sun For Moon",
-          OrbitalElements.newY2000Elements(1, 0.016709,
-                                           0, 278.9874,
-                                           -77.0596, 0),
-          OrbitalElements.newY2000Elements(0, -0.000000001151,
-                                           0, 0.98564735200,
-                                           0.00004709350, 0));
+    EMBARY("Sun For Moon",
+           OrbitalElements.newY2000Elements(1, 0.016709,
+                                            0, 278.9874,
+                                            -77.0596, 0),
+           OrbitalElements.newY2000Elements(0, -0.000000001151,
+                                            0, 0.98564735200,
+                                            0.00004709350, 0));
     
     /**  The planet's name  */
     private final String name;
