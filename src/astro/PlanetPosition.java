@@ -407,8 +407,9 @@ final class Moon extends PlanetEarthOrbit {
 
         //  Adjust for rhc perturbations
 
-        double rhc = hoc.getZ() - 0.58 * cos(mOes.getMan() - 2 * mel);
-        rhc -= 0.46 * cos(2 * mel);
+        final double rhc = hoc.getZ() -
+                           0.58 * cos(mOes.getMan() - 2 * mel) -
+                           0.46 * cos(2 * mel);
         
         return new RectangularCoords(rhc * cos(lon) * cos(lat),
                                      rhc * sin(lon) * cos(lat),
