@@ -9,9 +9,9 @@ package tests;
 
 import static net.paulgriffiths.jastro.utils.Astro.getUTCDate;
 import static net.paulgriffiths.jastro.utils.Astro.normalizeDegrees;
-import net.paulgriffiths.jastro.utils.Planet;
-import net.paulgriffiths.jastro.utils.PlanetPosition;
-import static net.paulgriffiths.jastro.utils.PlanetPosition.getPosition;
+import net.paulgriffiths.jastro.planet.Planet;
+import net.paulgriffiths.jastro.planet.PlanetPosition;
+import static net.paulgriffiths.jastro.planet.PlanetPosition.getPosition;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

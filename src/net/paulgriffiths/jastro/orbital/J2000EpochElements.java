@@ -6,7 +6,7 @@
 package net.paulgriffiths.jastro.orbital;
 
 import static java.lang.Math.toRadians;
-import net.paulgriffiths.jastro.utils.Planet;
+import net.paulgriffiths.jastro.planet.Planet;
 
 /**
  * Class for orbital elements at the J2000 epoch.

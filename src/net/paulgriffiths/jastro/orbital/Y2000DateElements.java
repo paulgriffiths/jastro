@@ -9,7 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
-import net.paulgriffiths.jastro.utils.Planet;
+import net.paulgriffiths.jastro.planet.Planet;
 
 /**
  * Class for orbital elements at a specified date.

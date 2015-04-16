@@ -6,7 +6,7 @@
 package net.paulgriffiths.jastro.orbital;
 
 import java.util.Date;
-import net.paulgriffiths.jastro.utils.Planet;
+import net.paulgriffiths.jastro.planet.Planet;
      
 /**
  * Base class for orbital elements at a specified date.

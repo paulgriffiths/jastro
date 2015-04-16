@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.paulgriffiths.jastro.utils;
+package net.paulgriffiths.jastro.planet;
 
 /**
  * Planets enumeration class.

@@ -8,7 +8,7 @@ package net.paulgriffiths.jastro.orbital;
 import java.util.Calendar;
 import java.util.Date;
 import net.paulgriffiths.jastro.utils.JulianDate;
-import net.paulgriffiths.jastro.utils.Planet;
+import net.paulgriffiths.jastro.planet.Planet;
 
 /**
  * Class for orbital elements at a specified Julian date.

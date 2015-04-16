@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import net.paulgriffiths.jastro.utils.Planet;
+import net.paulgriffiths.jastro.planet.Planet;
 
 /**
  * Planets enumeration class unit tests class.
