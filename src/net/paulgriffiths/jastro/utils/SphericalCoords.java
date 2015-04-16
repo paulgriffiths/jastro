@@ -217,4 +217,10 @@ public class SphericalCoords {
                 radius * sin(toRadians(inclination)) * sin(toRadians(azimuth)),
                 radius * cos(toRadians(inclination)));
     }
+    
+    @Override
+    public String toString() {
+        return String.format("(az=%.3f, inc=%.3f, rad=%.3f",
+                             azimuth, inclination, radius);
+    }
 }

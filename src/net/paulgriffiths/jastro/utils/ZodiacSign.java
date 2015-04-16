@@ -66,4 +66,9 @@ public enum ZodiacSign {
     public String getShortName() {
         return shortName;
     }
+    
+    @Override
+    public String toString() {
+        return getLongName();
+    }
 }

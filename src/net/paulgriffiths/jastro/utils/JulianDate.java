@@ -145,4 +145,9 @@ public class JulianDate implements Comparable<JulianDate> {
             return 0;
         }
     }
+    
+    @Override
+    public String toString() {
+        return String.format("%.3f", jdate);
+    }
 }
