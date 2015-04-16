@@ -367,7 +367,8 @@ final class Moon extends PlanetEarthOrbit {
         final RectangularCoords hec = helioEclCoords();
         final RectangularCoords hoc = helioOrbCoords();
         
-        final PlanetPosition sfm = PlanetPosition.getPosition(Planet.EMBARY, getDate());
+        //final PlanetPosition sfm = PlanetPosition.getPosition(Planet.EMBARY, getDate());
+        final PlanetPosition sfm = new EarthMoonBarycenter(getDate());
         final OrbitalElements mOes = getElements();
         final OrbitalElements sOes = sfm.getElements();
         
