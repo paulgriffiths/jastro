@@ -114,8 +114,6 @@ public class HMS {
      */
     @Override
     public String toString() {
-        Formatter fmt = new Formatter();
-        fmt.format("%02dh %02dm %02ds", hours, minutes, seconds);
-        return fmt.toString();
+        return String.format("%02dh %02dm %02ds", hours, minutes, seconds);
     }
 }

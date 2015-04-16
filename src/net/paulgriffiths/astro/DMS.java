@@ -116,9 +116,7 @@ public class DMS {
      */
     @Override
     public String toString() {
-        Formatter fmt = new Formatter();
-        fmt.format("%c%02dd %02dm %02ds", degrees < 0 ? '-' : '+',
+        return String.format("%c%02dd %02dm %02ds", degrees < 0 ? '-' : '+',
                    Math.abs(degs), Math.abs(minutes), Math.abs(seconds));
-        return fmt.toString();
     }    
 }

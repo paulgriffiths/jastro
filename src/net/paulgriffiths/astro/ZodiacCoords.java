@@ -37,9 +37,7 @@ public class ZodiacCoords {
      */
     @Override
     public String toString() {
-        Formatter fmt = new Formatter();
-        fmt.format("%02d%s%02d", position.getDegrees() % 30,
-                sign.getShortName(), position.getMinutes());
-        return fmt.toString();
+        return String.format("%02d%s%02d", position.getDegrees() % 30,
+                             sign.getShortName(), position.getMinutes());
     }
 }
