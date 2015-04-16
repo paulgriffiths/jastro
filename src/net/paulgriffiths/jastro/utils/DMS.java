@@ -104,8 +104,8 @@ public class DMS {
     @Override
     public String toString() {
         return String.format("%c%02dd %02dm %02ds", degrees < 0 ? '-' : '+',
-                   Math.abs(wholeDegrees),
-                   Math.abs(wholeMinutes),
-                   Math.abs(wholeSeconds));
+                             Math.abs(wholeDegrees),
+                             Math.abs(wholeMinutes),
+                             Math.abs(wholeSeconds));
     }    
 }
