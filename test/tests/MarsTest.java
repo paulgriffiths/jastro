@@ -13,17 +13,17 @@
  */
 package tests;
 
-import net.paulgriffiths.astro.Planet;
-import net.paulgriffiths.astro.PlanetPosition;
+import net.paulgriffiths.jastro.utils.Planet;
+import net.paulgriffiths.jastro.utils.PlanetPosition;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import static net.paulgriffiths.astro.Astro.getUTCDate;
-import static net.paulgriffiths.astro.Astro.normalizeDegrees;
-import static net.paulgriffiths.astro.PlanetPosition.getPosition;
+import static net.paulgriffiths.jastro.utils.Astro.getUTCDate;
+import static net.paulgriffiths.jastro.utils.Astro.normalizeDegrees;
+import static net.paulgriffiths.jastro.utils.PlanetPosition.getPosition;
 
 /**
  * Mars position unit tests class.

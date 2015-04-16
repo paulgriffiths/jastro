@@ -5,8 +5,8 @@
  */
 package tests;
 
-import net.paulgriffiths.astro.RectangularCoords;
-import net.paulgriffiths.astro.SphericalCoords;
+import net.paulgriffiths.jastro.utils.RectangularCoords;
+import net.paulgriffiths.jastro.utils.SphericalCoords;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

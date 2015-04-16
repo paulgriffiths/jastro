@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.paulgriffiths.astro;
+package net.paulgriffiths.jastro.utils;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
@@ -15,20 +15,11 @@ import java.util.Date;
  * @author Paul Griffiths
  */
 public class JulianDate implements Comparable<JulianDate> {
-    
-    /**  Number of milliseconds in a day  */
     private static final double MS_IN_A_DAY = 86400000.0;
-    
-    /**  Julian date at J2000 epoch  */
     private static final double EPOCH_J2000 = 2451545.0;
-    
-    /**  Number of days in a Julian century  */
     private static final double DAYS_IN_CENTURY = 36525;
-    
-    /**  UNIX timestamp at J2000 epoch  */
     private static final long TS_J2000;
     
-    /**  Julian date for this object  */
     private final double jdate;
     
     /**  Initialize static timestamp member  */

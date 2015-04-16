@@ -13,11 +13,11 @@
  */
 package tests;
 
-import static net.paulgriffiths.astro.Astro.getUTCDate;
-import static net.paulgriffiths.astro.Astro.normalizeDegrees;
-import net.paulgriffiths.astro.Planet;
-import net.paulgriffiths.astro.PlanetPosition;
-import static net.paulgriffiths.astro.PlanetPosition.getPosition;
+import static net.paulgriffiths.jastro.utils.Astro.getUTCDate;
+import static net.paulgriffiths.jastro.utils.Astro.normalizeDegrees;
+import net.paulgriffiths.jastro.utils.Planet;
+import net.paulgriffiths.jastro.utils.PlanetPosition;
+import static net.paulgriffiths.jastro.utils.PlanetPosition.getPosition;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

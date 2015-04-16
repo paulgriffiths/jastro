@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.paulgriffiths.astro;
+package net.paulgriffiths.jastro.utils;
 
 import static java.lang.Math.sin;
 import static java.lang.Math.cos;

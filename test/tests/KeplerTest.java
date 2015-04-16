@@ -8,7 +8,7 @@ package tests;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static java.lang.Math.toRadians;
-import static net.paulgriffiths.astro.Astro.kepler;
+import static net.paulgriffiths.jastro.utils.Astro.kepler;
 
 /**
  * Keplerian function unit tests class.

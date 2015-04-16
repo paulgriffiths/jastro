@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.paulgriffiths.astro;
+package net.paulgriffiths.jastro.utils;
 
 import java.util.Date;
 import static java.lang.Math.cos;
@@ -12,6 +12,7 @@ import static java.lang.Math.atan2;
 import static java.lang.Math.hypot;
 import static java.lang.Math.toRadians;
 import java.util.Calendar;
+import net.paulgriffiths.jastro.orbital.DateOrbitalElements;
 
 /**
  * Planet position class.
@@ -19,17 +20,10 @@ import java.util.Calendar;
  * @author Paul Griffiths
  */
 abstract public class PlanetPosition {
-    
-    /**  Obliguity of the ecliptic  */
     static protected final double OBLIQUITY = toRadians(23.43928);
     
-    /**  The planet  */
     private final Planet planet;
-    
-    /**  The orbital elements  */
-    private final OrbitalElements elems;
-    
-    /**  The position date  */
+    private final DateOrbitalElements elems;
     private final Date date;
     
     /**
@@ -121,7 +115,7 @@ abstract public class PlanetPosition {
                              final Date date) {
         this.planet = planet;
         this.date = new Date(date.getTime());
-        this.elems = this.planet.getDateElements(this.date);
+        this.elems = DateOrbitalElements.getElementsForPlanet(planet, this.date);
     }
     
     /**
@@ -174,7 +168,7 @@ abstract public class PlanetPosition {
      * 
      * @return  The orbital elements associated with this position 
      */
-    protected OrbitalElements getElements() {
+    protected DateOrbitalElements getElements() {
         return elems;
     }
     
@@ -369,8 +363,8 @@ final class Moon extends PlanetEarthOrbit {
         
         //final PlanetPosition sfm = PlanetPosition.getPosition(Planet.EMBARY, getDate());
         final PlanetPosition sfm = new EarthMoonBarycenter(getDate());
-        final OrbitalElements mOes = getElements();
-        final OrbitalElements sOes = sfm.getElements();
+        final DateOrbitalElements mOes = getElements();
+        final DateOrbitalElements sOes = sfm.getElements();
         
         //  Calculate mean elongation and argument
         //  of latitude for the moon.

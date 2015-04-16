@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import static net.paulgriffiths.astro.Astro.normalizeDegrees;
+import static net.paulgriffiths.jastro.utils.Astro.normalizeDegrees;
 
 /**
  * Normalize degrees function unit tests.

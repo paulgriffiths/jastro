@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.paulgriffiths.astro;
+package net.paulgriffiths.jastro.utils;
 
 import java.util.Formatter;
 
@@ -13,26 +13,13 @@ import java.util.Formatter;
  * @author Paul Griffiths
  */
 public class HMS {
-    
-    /**  Seconds in a day constant  */
     private static final int SECS_IN_A_DAY = 86400;
-    
-    /**  Seconds in an hour constant  */
     private static final int SECS_IN_A_HOUR = 3600;
-    
-    /**  Seconds in a minute constant  */
     private static final int SECS_IN_A_MIN = 60;
     
-    /*  Angle in normalized degrees  */
     private final double degrees;
-    
-    /*  Integral number of hours  */
     private final int hours;
-    
-    /*  Integral number of minutes  */
     private final int minutes;
-    
-    /*  Integral number of seconds  */
     private final int seconds;
     
     /**

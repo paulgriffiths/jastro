@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.paulgriffiths.astro;
+package net.paulgriffiths.jastro.utils;
 
 /**
  * Zodiac sign enumeration class.
@@ -11,47 +11,20 @@ package net.paulgriffiths.astro;
  * @author  Paul Griffiths
  */
 public enum ZodiacSign {
-    
-    /**  Aries  */
     ARIES ("Aries", "AR"),
-    
-    /**  Taurus  */
     TAURUS ("Taurus", "TA"),
-    
-    /**  Gemini  */
     GEMINI ("Gemini", "GE"),
-    
-    /**  Cancer  */
     CANCER ("Cancer", "CN"),
-    
-    /**  Leo  */
     LEO ("Leo", "LE"),
-    
-    /**  Virgo  */
     VIRGO ("Virgo", "VI"),
-    
-    /**  Libra  */
     LIBRA ("Libra", "LI"),
-    
-    /**  Scorpio  */
     SCORPIO ("Scorpio", "SC"),
-    
-    /**  Sagittarius  */
     SAGITTARIUS ("Sagittarius", "SG"),
-    
-    /**  Capricorn  */
     CAPRICORN ("Capricorn", "CP"),
-    
-    /**  Aquarius  */
     AQUARIUS ("Aquarius", "AQ"),
-    
-    /**  Pisces  */
     PISCES ("Pisces", "PI");
     
-    /**  Long name of sign  */
     private final String longName;
-    
-    /**  Abbreviated short name of sign  */
     private final String shortName;
     
     /**

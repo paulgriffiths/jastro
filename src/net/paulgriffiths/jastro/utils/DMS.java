@@ -3,37 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.paulgriffiths.astro;
+package net.paulgriffiths.jastro.utils;
 
 import java.util.Formatter;
 
 /**
- * Degrees, minutes and seconds class.
+ * Degrees, wholeMinutes and wholeSeconds class.
  * 
  * @author Paul Griffiths
  */
 public class DMS {
-    
-    /**  Seconds in a degree constant  */
     private static final int SECS_IN_A_DEG = 3600;
-    
-    /**  Seconds in a minute constant  */
     private static final int SECS_IN_A_MIN = 60;
-    
-    /**  Seconds in a circle constant  */
     private static final int SECS_IN_A_CIRC = 1296000;
     
-    /*  Angle in degrees  */
     private final double degrees;
-    
-    /*  Integral number of degrees  */
-    private final int degs;
-    
-    /*  Integral number of minutes  */
-    private final int minutes;
-    
-    /*  Integral number of seconds  */
-    private final int seconds;
+    private final int wholeMinutes;
+    private final int wholeSeconds;
+    private final int wholeDegrees;
     
     /**
      * Class constructor taking angle in degrees.
@@ -50,9 +37,9 @@ public class DMS {
                               SECS_IN_A_MIN);
         final int s = (int) (totalSecs - d * SECS_IN_A_DEG -
                                          m * SECS_IN_A_MIN);
-        degs = d * sign;
-        minutes = m * sign;
-        seconds = s * sign;
+        wholeDegrees = d * sign;
+        wholeMinutes = m * sign;
+        wholeSeconds = s * sign;
     }
     
     /**
@@ -70,25 +57,25 @@ public class DMS {
      * @return  The integeral number of degrees 
      */
     public int getDegrees() {
-        return degs;
+        return wholeDegrees;
     }
     
     /**
-     * Returns the integral number of minutes.
+     * Returns the integral number of wholeMinutes.
      * 
-     * @return  The integral number of minutes 
+     * @return  The integral number of wholeMinutes 
      */
     public int getMinutes() {
-        return minutes;
+        return wholeMinutes;
     }
     
     /**
-     * Returns the integral number of seconds.
+     * Returns the integral number of wholeSeconds.
      * 
-     * @return  The integral number of seconds 
+     * @return  The integral number of wholeSeconds 
      */
     public int getSeconds() {
-        return seconds;
+        return wholeSeconds;
     }
     
     /**
@@ -112,11 +99,13 @@ public class DMS {
     /**
      * Returns a string representation in the form "+00d 00m 00s".
      * 
-     * @return  A string representation of the degrees, minutes and seconds 
+     * @return  A string representation of the degrees, wholeMinutes and wholeSeconds 
      */
     @Override
     public String toString() {
         return String.format("%c%02dd %02dm %02ds", degrees < 0 ? '-' : '+',
-                   Math.abs(degs), Math.abs(minutes), Math.abs(seconds));
+                   Math.abs(wholeDegrees),
+                   Math.abs(wholeMinutes),
+                   Math.abs(wholeSeconds));
     }    
 }

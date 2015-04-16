@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.paulgriffiths.astro;
+package net.paulgriffiths.jastro.utils;
 
 import java.util.Formatter;
 
@@ -12,11 +12,7 @@ import java.util.Formatter;
  * @author paul
  */
 public class ZodiacCoords {
-    
-    /**  Zodiac sign  */
     private final ZodiacSign sign;
-    
-    /**  Position in ecliptic  */
     private final DMS position;
     
     /**
